@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>
+            Form
+        </title>
+    </head>
+    <body>
+
+        <section class="form">
+            <div id="displayError"></div>
+            <form name="form__elem" action="#">
+
+                <label for="firstName">
+                    First name
+                    <input type="text" id="firstName" name="firstName" class="forms__input" required>
+                    <span class="error"></span>
+                </label>
+
+
+                <label for="lastName">
+                    Last name
+                    <input type="text" id="lastName" name="lastName" class="forms__input" required>
+                    <span class="error"></span>
+
+                </label>
+
+
+                <label for="email">
+                    Email
+                    <input type="email" id="email" name="email" class="forms__input" required minlength="10" maxlength="40">
+                    <span class="error"></span>
+                </label>
+
+
+                <label for="phoneNo">
+                    Phone number
+                    <input type="number" id="phoneNo" name="phoneNo" class="forms__input" required maxlength="10">
+                    <span class="error"></span>
+                </label>
+
+
+                <button type="button" id="btn__primary" name="button">
+                    SUBMIT
+                </button>
+            </form>
+        </section>
+
+    <script defer src="bundle.js"></script></body>
+</html>
