@@ -1,0 +1,17 @@
+// -----------------------------------------------------------------------------
+// This file contains all styles related to the button component.
+// -----------------------------------------------------------------------------
+
+
+
+#btn__primary{
+    padding:20px;
+    font-size: 20px;
+    @include border(20px);
+    background-color:green;
+    color:#fff;
+    @include transition($bgCol:rgb(235, 129, 8));
+    border: none;
+    cursor: pointer;
+    @include transition;
+}

@@ -1,0 +1,69 @@
+// -----------------------------------------------------------------------------
+// This file contains styles that are specific to the home page.
+// ---------------
+
+.form{
+ margin:0 auto;
+ form{
+    max-width:300px;
+    width:100%;
+     margin:50px auto;
+     padding:20px;
+     
+    
+     label{
+        display: block;
+        position:relative;
+        font-weight: bold;
+    
+        .error{
+            color:rgb(250, 9, 9);
+            padding:10px;
+            width:100%;
+            position:absolute;
+            top:30%;
+            font-weight: bold;
+            font-size: 18px;
+            &::before{
+                content:attr(data-before);
+                position: absolute;
+               padding:4px 8px;
+                background-color:var(--success);
+                border-radius: 50%;
+                font-size: 10px;
+                color:white;
+                left:-30px;
+            }
+            
+            
+        }
+    
+    }
+     input{
+        padding:15px;
+        margin-top:10px;
+        margin-bottom:30px;
+        position:relative;
+        width:100%;
+        @include border($rad:10px);
+        border-color: $black-100;
+       
+        @include transition;
+     
+        &:focus{
+            box-shadow: 4px 4px 10px 5px rgba(153, 151, 151, 0.6);
+            outline: none;
+        }
+    
+    
+    }
+    
+    }
+}
+
+
+ 
+  button{
+     width:100%;
+  }
+
