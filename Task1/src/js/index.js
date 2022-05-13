@@ -1,210 +1,87 @@
 
 import '../styles/main.scss';
-
+import erroricons from './Error';
+import validate from './validate';
 let form = document.forms[0];
 
-let firstName = document.getElementById('firstName');
-let lastName =document.getElementById('lastName');
-let email =document.getElementById('email');
-let phoneNo =document.getElementById('phoneNo');
-let emailError= document.querySelector("#email + span.error");
+let inputsElem = Array.from(form.children);
+const nameRegex = new RegExp(/^[A-Za-z]{2,20}$/);
+const emailRegExp = new RegExp(/^[a-z0-9]+@[a-z]+\.[a-z]+$/i);
+const phoneno = new RegExp(/^\d{10}$/);
+let passReg = new RegExp(/^(?=.*[0-9])(?=.*[@$%*#!&])[a-zA-Z0-9!@#$%*&]{6,20}$/);
 
-let firstNameError= document.querySelector("#firstName + span.error");
-let lastNameError= document.querySelector("#lastName + span.error");
-let phoneError= document.querySelector("#phoneNo + span.error");
+let inputs = document.querySelectorAll('input');
 let displayError = document.getElementById('displayError');
-
 let btn = document.getElementById('btn__primary');
 
-let errorClass = document.getElementsByClassName('error');
-
-let erroricn = errorClass.item(0);
-
-
+console.log(inputs[0]);
 
 
 
 
 btn.addEventListener('click',(e)=>{
-
-        let inputsElem = Array.from(form.children);
-
-        for(let i=0;i<inputsElem.length-1;i++){
-            if(inputsElem[i].children[0].validity.valueMissing || inputsElem[i].children[0].validity.typeMismatch){
-                displayError.style.display="block";
-                displayError.innerHTML="One of the field is incorrect or invalid. Please, follow the examples in order to continue";
-                displayError.classList.add('danger');
-                displayError.classList.remove('success');
-                inputsElem[i].children[0].style.border="3px solid red";
-                    
-            }
-            if(inputsElem[0].children[0].style.borderColor ==="red"){
-                firstNameError.innerHTML="Enter your first Name";
-                
-            } 
-            if(inputsElem[1].children[0].style.borderColor ==="red"){
-                lastNameError.innerHTML="Enter your last Name";
-         
-            }  
-            if(inputsElem[2].children[0].style.borderColor ==="red"){
-                emailError.innerHTML="Enter your email ID";
-           
-            } 
-            if(inputsElem[3].children[0].style.borderColor ==="red"){
-                phoneError.innerHTML="Enter your contact No.";
-             
-            } 
-           
-            else if(inputsElem[0].children[0].validity.valid){
-                if(inputsElem[1].children[0].validity.valid){
-                    if(inputsElem[2].children[0].validity.valid){
-                        if(inputsElem[3].children[0].validity.valid){
-                            displayError.style.display="block";
+    for(let i=0;i<inputs.length;i++){
+        if(inputs[i].value == "" || inputs[i].className == "invalid"){  
+            displayError.innerHTML="One of the field is incorrect or invalid. Please, follow the examples in order to continue";
+            displayError.classList.add('danger');
+            displayError.classList.remove('success');
+            inputs[i].className="invalid";  
+            
+        } 
+        else if(inputs[0].className == "valid"){
+            if(inputs[1].className == "valid"){
+                if(inputs[2].className == "valid"){
+                    if(inputs[3].className == "valid"){
+                        if(inputs[4].className == "valid"){
                             displayError.innerHTML="Your form has been submitted ";
-                            displayError.classList.remove('danger');
-                            displayError.classList.add('success');
-                        }  
+                        displayError.classList.remove('danger');
+                        displayError.classList.add('success');
+                        }
                     }
                 }
-                    
-                }
-    
-      
-    }
-
+            }
+        }
+                           
+        }
+       
         e.preventDefault();   
 })
-// //Built in API
-
-//Email validation message
-email.addEventListener("input",(e)=>{
-    // const emailRegExp = new RegExp("/^[a-z0-9]+@[a-z]+\.[a-z]{2,3}$/i");
-    let emailerricn = errorClass.item(2);
-    if(email.validity.valueMissing){
-        // If the field is empty,
-    // display the following error message.
-        emailError.textContent = 'You need to enter an e-mail address.';
-        email.style.border ="3px solid red";
-        emailerricn.setAttribute('data-before','!');
-        emailerricn.style.setProperty('--success','red');
-        return false;
-    }
-    else if(email.validity.typeMismatch){
-        emailError.textContent = 'Enter a valid email address';
-        email.style.border ="3px solid red";
-        emailerricn.setAttribute('data-before','!');
-        emailerricn.style.setProperty('--success','red');
-    }
-    else if(email.validity.tooShort) {
-        // If the data is too short,
-        // display the following error message.
-        emailError.textContent = `Email should be at least ${ email.minLength } characters; you entered ${ email.value.length }.`;
-        emailerricn.setAttribute('data-before','!');
-        emailerricn.style.setProperty('--success','red');
-    }  
-    else if(email.validity.valid) {
-        emailError.textContent ="";
-        emailError.className = 'error';
-        email.style.border ="3px solid green";
-        emailerricn.setAttribute('data-before','✓');
-        emailerricn.style.setProperty('--success','green');
-        return true;
-    }
-});
 
 
 
 
-//Contact No.
-phoneNo.addEventListener('input',(e)=>{
-    let phoneerricn = errorClass.item(3);
-    var phoneno = new RegExp(/^\d{10}$/);
-    if(phoneNo.value == ""){
-        phoneError.innerHTML="Enter your mobile No.";
-        phoneerricn.setAttribute('data-before','!');
-        phoneerricn.style.setProperty('--success','red');
-        return false;
-    }
-    else if(!phoneno.test(phoneNo.value)){
-        phoneError.innerHTML="Enter your 10 digit correct mobile No.";
-        phoneNo.style.border="3px solid red";
-        phoneerricn.setAttribute('data-before','!');
-        phoneerricn.style.setProperty('--success','red');
-        return false;
-    }
-    else{
-        phoneError.innerHTML="";
-        phoneNo.style.border="3px solid green";
-        phoneerricn.setAttribute('data-before','✓');
-        phoneerricn.style.setProperty('--success','green');
-        return true;
-    }
+// Handling inputs 
+inputs.forEach((input)=>{
+    input.addEventListener('keyup',(e)=>{
+      
+            if(e.target.name === 'firstName'){
+                validate(e.target,nameRegex);
+                erroricons(e.target,0,"Please enter a valid First Name");
+                     
+            } 
+             else if(e.target.name === 'lastName'){
+                validate(e.target,nameRegex)
+                erroricons(e.target,1,"Please enter a valid Last Name");
+            }
+            
+            else if(e.target.name === 'email'){
+                validate(e.target,emailRegExp);
+                erroricons(e.target,2);
+                erroricons(e.target,2,"Please enter a valid email");
+                if(e.target.value > 20){
+                    erroricons(e.target,2,"Please enter a @ email");
+                }
+               
+            }
+            else if(e.target.name === 'phoneNo'){
+                validate(e.target,phoneno);
+                erroricons(e.target,3);
+                erroricons(e.target,3,"Your contact No. should be of 10 digits only");   
+            }
+            else if(e.target.name === 'password'){
+                validate(e.target,passReg);
+                erroricons(e.target,4,"Your password should contain atleast 1 digit and 1 special character");
+               
+            }
+    })
 })
-
-
-firstName.addEventListener("input",(e)=>{
-    var regName = new RegExp(/^[A-Za-z]+\s?[A-Za-z]+$/);
-  
-    if(firstName.value.length==0 || firstName.value == ""){
-        erroricn.setAttribute('data-before','!');
-        erroricn.style.setProperty('--success','red');
-        firstNameError.textContent ="Enter your first Name";
-        firstName.style.border="3px solid red";
-     
-        return false;
-    }else if(!regName.test(firstName.value)){
-        firstNameError.textContent ="Enter a valid name";
-        firstName.style.border="3px solid red";
-        erroricn.setAttribute('data-before','!');
-        erroricn.style.setProperty('--success','red');
-        return false;
-    }else if(firstName.value.length>20){
-        firstNameError.textContent ="Your name is too long";
-        firstName.style.border="3px solid red";
-        erroricn.setAttribute('data-before','!');
-        erroricn.style.setProperty('--success','red');
-        return false;
-    }
-    else{
-        firstNameError.textContent ="";
-        firstName.style.border="3px solid green";
-        erroricn.setAttribute('data-before','✓');
-        erroricn.style.setProperty('--success','green');
-        return true;
-    }
-   
-});
-
-
-
-lastName.addEventListener("input",(e)=>{
-    var regName = new RegExp(/^[A-Za-z]+$/);
-    let nameerricn = errorClass.item(1);
-    if(lastName.value.length==0 || lastName.value ==""){
-        lastNameError.textContent ="Enter your last Name";
-        lastName.style.border="3px solid red";
-        nameerricn.setAttribute('data-before','!');
-        nameerricn.style.setProperty('--success','red');
-        return false;
-    }else if(!regName.test(lastName.value)){
-        lastNameError.textContent ="Enter a valid name";
-        lastName.style.border="3px solid red";
-        nameerricn.setAttribute('data-before','!');
-        nameerricn.style.setProperty('--success','red');
-        return false;
-    }else if(lastName.value.length>20){
-        lastNameError.textContent ="Your name is too long";
-        lastName.style.border="3px solid red";
-        nameerricn.setAttribute('data-before','!');
-        nameerricn.style.setProperty('--success','red');
-        return false;
-    }
-    else{
-        lastNameError.textContent ="";
-        lastName.style.border="3px solid green";
-        nameerricn.setAttribute('data-before','✓');
-        nameerricn.style.setProperty('--success','green');
-        return true;
-    }
-   
-});
